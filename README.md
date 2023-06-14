@@ -1,4 +1,4 @@
-# 21 (The file is in dev and the current AI/rules are not working as intended)
+# 21 (The file is in dev and the current AI is not working as intended)
 You will be playing with a dealer (AI) in a 21 game. 
 ## How the game works
 The rules are simple: 

@@ -1,15 +1,20 @@
 import random
 number = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
 type = ["spades", "hearts", "diamonds", "clubs"]
-count = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 deck = []
 pts = []
+hash = {}
 for i in number:
     for j in type:
+        hash[i+" of "+j]=len(deck)//4+1
+        if hash[i+" of "+j]>10:
+            hash[i+" of "+j]=10
+        if hash[i+" of "+j]==1:
+            hash[i+" of "+j]=0
         deck.append(i+" of "+j)
-for i in count:
-    for j in range(0, 4):
-        pts.append(i)
+random.shuffle(deck)
+for i in deck:
+    pts.append(hash[i])
 dealer_deck=[]
 player_deck=[]
 total_player_point=0
@@ -26,12 +31,12 @@ def player_turn():
     print("Would you like to Draw or Stay? (D/S): ", end='')
     report=input()
     if report=='S': 
-        print("You chose stay.")
+        print("You chose to stay.")
         global stay_count
         stay_count=1
         return
     else:
-        print("You chose draw.")
+        print("You chose to draw.")
         card=random.randint(0, len(deck)-1)
         player_deck.append(deck[card])
         deck.pop(card)
@@ -54,7 +59,7 @@ def dealer_turn():
     global total_dealer_point
     global dealer_ace_count
     if total_dealer_point<17:
-        print("The dealer chose draw")
+        print("The dealer chose to draw")
         card=random.randint(0, len(deck)-1)
         dealer_deck.append(deck[card])
         deck.pop(card)
@@ -64,7 +69,7 @@ def dealer_turn():
             total_dealer_point+=pts[card]
         pts.pop(card)
     else:
-        print("The dealer chose stay")
+        print("The dealer chose to stay")
         global stay_count
         stay_count+=1
         return
