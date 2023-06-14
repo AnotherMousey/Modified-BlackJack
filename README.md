@@ -1,9 +1,10 @@
-# 21
+# 21 (The file is in dev and the current AI/rules are not working as intended)
 You will be playing with a dealer (AI) in a 21 game. 
 ## How the game works
 The rules are simple: 
 - The closest one that has a score of less than or equal to 21 wins. 
 - The ace card can be 1, 10 or 11 points. 
+- The Jack, Queen, and King card worth 10 points
 ## How the AI works
 The dealer AI works as follow:
 - Every turn, it will calculate the maximum number of cards that he can pick to guarantee a score that is lower than or equal to 21. This number will be calculate from the dealer's hand and his deduction on your hand. Lets call the number $k$.
