@@ -64,6 +64,7 @@ def player_turn():
 def dealer_turn():
     global total_dealer_point
     global dealer_ace_count
+    #this is for the AI
     if total_dealer_point<17:
         print("The dealer chose to draw")
         card=random.randint(0, len(deck)-1)

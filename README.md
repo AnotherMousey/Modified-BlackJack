@@ -1,5 +1,5 @@
 # 21 (The file is in dev and the current AI is not working as intended)
-You will be playing with a dealer (AI) in a 21 game. 
+You will be playing with a dealer (AI) in a 21 game. You can modify the code (duplicate the player function and delete the dealer function) to create a local multiplayer game of 21.
 ## How the game works
 The rules are simple: 
 - The closest one that has a score of less than or equal to 21 wins. 
