@@ -1,3 +1,6 @@
+#REMEMBER TO UPDATE THE REVEAL RESULT (INCLUDING THE NUMBER OF CARDS ON HAND)
+
+
 import random
 number = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
 type = ["spades", "hearts", "diamonds", "clubs"]

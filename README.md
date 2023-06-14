@@ -18,6 +18,6 @@ This phase will occur once the game starts. You and the dealer both will be give
 In this phase, you and the dealer will take turn to draw a card or stay. If in a turn, you and the dealer both call stay, this phase ends.
 ### The compare phase
 In this phase, the computer will compare your best score with the dealer best score. The result will be:
-- Draw if both exceeds 21 or both have the same score.
-- You win if your score does not exceed 21 and the dealer exceeds 21 or you have the higher score.
-- The dealer wins in the other cases.
+- Draw if both exceeds 21 or both have the same score and the same cards on hand.
+- You win if your score does not exceed 21 and the dealer exceeds 21 or you have the higher score or you have the same score as the dealer but more cards on hand.
+- The dealer wins in other cases.
