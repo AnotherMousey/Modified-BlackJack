@@ -19,11 +19,14 @@ dealer_deck=[]
 player_deck=[]
 total_player_point=0
 total_dealer_point=0
+total_best_player_point=0
+total_best_dealer_point=0
 player_ace_count=0
 dealer_ace_count=0
 current_turn="player"
 stay_count=0
 print("Game start!")
+print()
 
 def player_turn():
     global player_ace_count
@@ -39,13 +42,13 @@ def player_turn():
         print("You chose to draw.")
         card=random.randint(0, len(deck)-1)
         player_deck.append(deck[card])
+        msg="You draw "+deck[card]
         deck.pop(card)
         if pts[card]==0:
             player_ace_count+=1
         else:
             total_player_point+=pts[card]
         pts.pop(card)
-        msg="You draw "+deck[card]
         print(msg)
         msg="Your current deck is: "
         for crd in player_deck:
@@ -53,6 +56,9 @@ def player_turn():
                 msg=msg+crd+"."
             else:
                 msg=msg+crd+", "
+        print(msg)
+        player_best_score()
+        msg="Your current score is "+str(total_best_player_point)
         print(msg)
 
 def dealer_turn():
@@ -77,48 +83,52 @@ def dealer_turn():
 def dealer_best_score():
     global dealer_ace_count
     global total_dealer_point
-    total_dealer_point+=dealer_ace_count
+    global total_best_dealer_point
+    total_best_dealer_point=total_dealer_point
+    total_best_dealer_point+=dealer_ace_count
     if dealer_ace_count>0:
-        if dealer_ace_count>1 and total_dealer_point+19<=21:
-            total_dealer_point+=19
-        elif dealer_ace_count>1 and total_dealer_point+18<=21:
-            total_dealer_point+=18
+        if dealer_ace_count>1 and total_best_dealer_point+19<=21:
+            total_best_dealer_point+=19
+        elif dealer_ace_count>1 and total_best_dealer_point+18<=21:
+            total_best_dealer_point+=18
         else:
-            if total_dealer_point+10<=21:
-                total_dealer_point+=10
-            elif total_dealer_point+9<=21:
-                total_dealer_point+=9
+            if total_best_dealer_point+10<=21:
+                total_best_dealer_point+=10
+            elif total_best_dealer_point+9<=21:
+                total_best_dealer_point+=9
 
 def player_best_score():
     global total_player_point
     global player_ace_count
-    total_player_point+=player_ace_count
+    global total_best_player_point
+    total_best_player_point=total_player_point
+    total_best_player_point+=player_ace_count
     if player_ace_count>0:
-        if player_ace_count>1 and total_player_point+19<=21:
-            total_player_point+=19
-        elif player_ace_count>1 and total_player_point+18<=21:
-            total_player_point+=18
+        if player_ace_count>1 and total_best_player_point+19<=21:
+            total_best_player_point+=19
+        elif player_ace_count>1 and total_best_player_point+18<=21:
+            total_best_player_point+=18
         else:
-            if total_player_point+10<=21:
-                total_player_point+=10
-            elif total_player_point+9<=21:
-                total_player_point+=9
+            if total_best_player_point+10<=21:
+                total_best_player_point+=10
+            elif total_best_player_point+9<=21:
+                total_best_player_point+=9
 
 def reveal_result():
-    msg="Your point is: "+str(total_player_point)
+    msg="Your point is: "+str(total_best_player_point)
     print(msg)
-    msg="Dealer's point is: "+str(total_dealer_point)
+    msg="Dealer's point is: "+str(total_best_dealer_point)
     print(msg)
     print("The result is: ", end='')
-    if total_dealer_point>21 and total_player_point>21:
+    if total_best_dealer_point>21 and total_best_player_point>21:
         print("Draw!")
-    elif total_dealer_point==total_player_point:
+    elif total_best_dealer_point==total_best_player_point:
         print("Draw!")
-    elif total_dealer_point>21:
+    elif total_best_dealer_point>21:
         print("You win!")
-    elif total_player_point>21:
+    elif total_best_player_point>21:
         print("Dealer wins!")
-    elif total_dealer_point>total_player_point:
+    elif total_best_dealer_point>total_best_player_point:
         print("Dealer wins!")
     else:
         print("You win!")
@@ -167,10 +177,13 @@ def game_main():
     #alert player about the initial deck
     init_deck_msg="Your first 2 cards are: "+player_deck[0]+" and "+player_deck[1]+"."
     print(init_deck_msg)
-    print("Your current")
+    player_best_score()
+    msg="Your current score is "+str(total_best_player_point)
+    print(msg)
+    print()
 
     #begin draw phase
-    while stay_count<=2:
+    while stay_count<2:
         msg="It is "+current_turn+"'s turn."
         print(msg)
         if current_turn=="player":
@@ -179,7 +192,7 @@ def game_main():
         else:
             current_turn="player"
             dealer_turn()
-            if stay_count==2: break
+        print()
     #end draw phase
 
     #begin compare phase
