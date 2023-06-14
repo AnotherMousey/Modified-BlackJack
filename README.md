@@ -7,8 +7,10 @@ The rules are simple:
 - The Jack, Queen, and King card worth 10 points
 ## How the AI works
 The dealer AI works as follow:
-- Every turn, it will calculate the maximum number of cards that he can pick to guarantee a score that is lower than or equal to 21. This number will be calculate from the dealer's hand and his deduction on your hand. Lets call the number $k$.
+- Every turn, it will calculate the maximum number of cards that he can pick to guarantee a score that is less than or equal to 21. This number will be calculate from the dealer's hand and his deduction on your hand. Lets call the number $k$.
 - Then the dealer will randomize a number from 1 to the number of remaining cards and compare it to $k$. If $k$ is larger than or equal to the randomize number, the dealer will call a draw, else he will call a stay.
+- If its hand has an ace (or two aces) and the score with the ace = 10 or 11 points is less than or equal to 21, its score will be the highest possible score. Then it will do a randomization like above.
+- Another addition to the AI to make it more human, if its score is higher than or equal to 19, it will guarantee a stay.
 ## The game phases
 ### The initial phase
 This phase will occur once the game starts. You and the dealer both will be given 2 cards from the initial deck.
