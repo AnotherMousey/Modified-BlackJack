@@ -39,7 +39,7 @@ def player_turn():
     if report=='S': 
         print("You chose to stay.")
         global stay_count
-        stay_count=1
+        stay_count+=1
         return
     else:
         print("You chose to draw.")
@@ -148,6 +148,7 @@ def game_main():
     global total_player_point
     global dealer_ace_count
     global current_turn
+    global stay_count
     #begin initial phase
     card=random.randint(0, len(deck)-1)
     player_deck.append(deck[card])
@@ -196,6 +197,7 @@ def game_main():
         msg="It is "+current_turn+"'s turn."
         print(msg)
         if current_turn=="player":
+            stay_count=0
             current_turn="dealer"
             player_turn()
         else:
