@@ -65,6 +65,7 @@ def dealer_turn():
     global total_best_dealer_point
     global total_dealer_point
     global dealer_ace_count
+    global stay_count
     #this is for the AI
     dealer_best_score()
     if total_best_dealer_point<17:
@@ -79,7 +80,6 @@ def dealer_turn():
         pts.pop(card)
     elif total_best_dealer_point>=19:
         print("The dealer chose to stay")
-        global stay_count
         stay_count+=1
         return
     else:
@@ -98,7 +98,6 @@ def dealer_turn():
             pts.pop(card)
         else:
             print("The dealer chose to stay")
-            global stay_count
             stay_count+=1
             return
 
