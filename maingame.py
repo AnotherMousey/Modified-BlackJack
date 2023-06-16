@@ -1,6 +1,3 @@
-#REMEMBER TO UPDATE THE REVEAL RESULT (INCLUDING THE NUMBER OF CARDS ON HAND)
-
-
 import random
 number = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
 type = ["spades", "hearts", "diamonds", "clubs"]
@@ -65,10 +62,12 @@ def player_turn():
         print(msg)
 
 def dealer_turn():
+    global total_best_dealer_point
     global total_dealer_point
     global dealer_ace_count
     #this is for the AI
-    if total_dealer_point<17:
+    dealer_best_score()
+    if total_best_dealer_point<17:
         print("The dealer chose to draw")
         card=random.randint(0, len(deck)-1)
         dealer_deck.append(deck[card])
@@ -78,11 +77,30 @@ def dealer_turn():
         else:
             total_dealer_point+=pts[card]
         pts.pop(card)
-    else:
+    elif total_best_dealer_point>=19:
         print("The dealer chose to stay")
         global stay_count
         stay_count+=1
         return
+    else:
+        seed=17030
+        probability=seed*(total_best_dealer_point**random.randint(1, 5))%len(deck)
+        if probability==0: probability=len(deck)
+        if probability<=(21-total_best_dealer_point)*4:
+            print("The dealer chose to draw")
+            card=random.randint(0, len(deck)-1)
+            dealer_deck.append(deck[card])
+            deck.pop(card)
+            if pts[card]==0:
+                dealer_ace_count+=1
+            else:
+                total_dealer_point+=pts[card]
+            pts.pop(card)
+        else:
+            print("The dealer chose to stay")
+            global stay_count
+            stay_count+=1
+            return
 
 def dealer_best_score():
     global dealer_ace_count
@@ -126,17 +144,23 @@ def reveal_result():
     print("The result is: ", end='')
     if total_best_dealer_point>21 and total_best_player_point>21:
         print("Draw!")
+    elif total_best_dealer_point>21:
+        print("You win!")
+    elif total_best_player_point>21:
+        print("Dealer wins!")
+    elif len(dealer_deck)==5 and len(player_deck)==5:
+        print("Draw!")
+    elif len(dealer_deck)==5:
+        print("Dealer wins!")
+    elif len(player_deck)==5:
+        print("You win!")
     elif total_best_dealer_point==total_best_player_point:
         if len(player_deck)==len(dealer_deck):
             print("Draw!")
         elif len(player_deck)>len(dealer_deck):
             print("You win!")
         else:
-            print("Dealer wins!")
-    elif total_best_dealer_point>21:
-        print("You win!")
-    elif total_best_player_point>21:
-        print("Dealer wins!")
+            print("Dealer wins!")    
     elif total_best_dealer_point>total_best_player_point:
         print("Dealer wins!")
     else:
@@ -193,7 +217,7 @@ def game_main():
     print()
 
     #begin draw phase
-    while stay_count<2:
+    while stay_count<2 and len(player_deck)<=5 and len(dealer_deck)<=5:
         msg="It is "+current_turn+"'s turn."
         print(msg)
         if current_turn=="player":
