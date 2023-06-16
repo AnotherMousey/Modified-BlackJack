@@ -119,15 +119,20 @@ def player_best_score():
                 total_best_player_point+=9
 
 def reveal_result():
-    msg="Your point is: "+str(total_best_player_point)
+    msg="Your hand has "+str(len(player_deck))+" cards, with a total of "+str(total_best_player_point)+ " points."
     print(msg)
-    msg="Dealer's point is: "+str(total_best_dealer_point)
+    msg="Dealer's hand has "+str(len(dealer_deck))+" cards, with a total of "+str(total_best_dealer_point)+ " points."
     print(msg)
     print("The result is: ", end='')
     if total_best_dealer_point>21 and total_best_player_point>21:
         print("Draw!")
     elif total_best_dealer_point==total_best_player_point:
-        print("Draw!")
+        if len(player_deck)==len(dealer_deck):
+            print("Draw!")
+        elif len(player_deck)>len(dealer_deck):
+            print("You win!")
+        else:
+            print("Dealer wins!")
     elif total_best_dealer_point>21:
         print("You win!")
     elif total_best_player_point>21:
